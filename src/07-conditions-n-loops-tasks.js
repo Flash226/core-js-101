@@ -27,8 +27,15 @@
  *  21 => 'Fizz'
  *
  */
-function getFizzBuzz(/* num */) {
-  throw new Error('Not implemented');
+function getFizzBuzz(num) {
+  if (num % 3 === 0 && num % 5 === 0) {
+    return 'FizzBuzz';
+  } if (num % 3 === 0) {
+    return 'Fizz';
+  } if (num % 5 === 0) {
+    return 'Buzz';
+  }
+  return num;
 }
 
 
@@ -43,8 +50,13 @@ function getFizzBuzz(/* num */) {
  *   5  => 120
  *   10 => 3628800
  */
-function getFactorial(/* n */) {
-  throw new Error('Not implemented');
+function getFactorial(n) {
+  if (n < 0) {
+    return -1;
+  } if (n === 0) {
+    return 1;
+  }
+  return (n * getFactorial(n - 1));
 }
 
 
@@ -165,8 +177,13 @@ function isInsideCircle(/* circle, point */) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  for (let i = 0; i < str.length; i += 1) {
+    if (str.indexOf(str[i]) === str.lastIndexOf(str[i])) {
+      return str[i];
+    }
+  }
+  return null;
 }
 
 
@@ -209,8 +226,8 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 
@@ -226,8 +243,8 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  return Number(num.toString().split('').reverse().join(''));
 }
 
 
@@ -269,8 +286,12 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const sum = num.toString().split('').reduce((total, amount) => Number(total) + Number(amount));
+  if (sum > 10) {
+    return getDigitalRoot(sum);
+  }
+  return sum;
 }
 
 
@@ -295,8 +316,24 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const stack = [];
+  const openBrackets = ['(', '[', '{', '<'];
+  const closeBrackets = [')', ']', '}', '>'];
+
+  for (let i = 0; i < str.length; i += 1) {
+    if (openBrackets.indexOf(str[i]) !== -1) {
+      stack.push(str[i]);
+    } else if (closeBrackets.indexOf(str[i]) !== -1) {
+      if (
+        closeBrackets.indexOf(str[i])
+        === openBrackets.indexOf(stack[stack.length - 1])
+      ) {
+        stack.length -= 1;
+      } else return false;
+    }
+  }
+  return !stack.length;
 }
 
 
